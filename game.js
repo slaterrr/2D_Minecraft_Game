@@ -17,7 +17,7 @@ const world = [row0,row1,row2,row3,row4,row5];
 // Player state
 let playerRow = 1;
 let playerColumn = 5;
-
+let airMovesRemaining = 1;
 
 
 function renderWorld()
@@ -58,13 +58,17 @@ renderWorld();
 function gravity()
 {
     if(playerRow < rowCount - 1) // if player is above the last block in the world
+    {
+        if(isJumping == true)
+        {  
+            return;   
+        }
+        else if(world[playerRow+1][playerColumn] == 'air')
         {
-            if(world[playerRow+1][playerColumn] == 'air')
-            {
-                playerRow++;
-                renderWorld();
-                //setTimeout(gravity,500);
-            }
+            playerRow++;
+            renderWorld();
+            //setTimeout(gravity,500);
+        }
 
     }
     
@@ -72,20 +76,44 @@ function gravity()
 
 setInterval(gravity, 100);
 
-
+let isJumping = false;
 
 document.addEventListener('keydown',function(event)
     {
         if(event.key == 'ArrowRight')
         {
-            if(playerColumn < columnCount - 1)
+            if(playerColumn < columnCount - 1) //keeps player in world
             {
                 if(world[playerRow][playerColumn+1] != 'grass')
-                {
-                    playerColumn++;                    
-                    renderWorld();
+                {   
+                    if(isJumping)
+                    {
+                        if(airMovesRemaining > 0)
+                        {
+                            airMovesRemaining--;
+                            playerColumn++;
+                            renderWorld();
+                        }
+                        else if(airMovesRemaining <= 0)
+                        {
+                        return;
+                        }
+                        
+                    } 
+                    else
+                    {
+                        playerColumn++;                    
+                        renderWorld();    
+                    } 
+                    
+                    
+                    
+                    
+                    
                     //setTimeout(gravity,800); 
-                }   
+                }
+                
+                
                 //Auto-move up mechanic
                 /*
                 else if(world[playerRow][playerColumn+1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn+1] == 'air') 
@@ -107,13 +135,30 @@ document.addEventListener('keydown',function(event)
             {
                 if(world[playerRow][playerColumn-1] != 'grass')
                 {
+                    if(isJumping)
+                    {
+                        if(airMovesRemaining > 0)
+                        {
+                            airMovesRemaining--;
+                            playerColumn--;
+                            renderWorld();
+                        }
+                        else if(airMovesRemaining <= 0)
+                        {
+                        return;
+                        }
                         
-                        playerColumn--;
-                        renderWorld();
-                        //setTimeout(gravity,500);     
-            
+                    } 
+                    else
+                    {
+                        playerColumn--;                    
+                        renderWorld();    
+                    }     
                 }
+
+                
                 //Auto-move up mechanic
+                /*
                 else if(world[playerRow][playerColumn-1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn-1] == 'air') 
                 {
                     playerRow--;
@@ -122,7 +167,7 @@ document.addEventListener('keydown',function(event)
                     renderWorld();
                     //setTimeout(gravity,500);                       
                 }
-
+                */
             }
             
         }
@@ -136,7 +181,14 @@ document.addEventListener('keydown',function(event)
                 {
                     playerRow--;
                     renderWorld();
-                    //setTimeout(gravity,1500);                          
+                    isJumping = true;
+                    airMovesRemaining = 1;
+                    //setTimeout(gravity,1500);  
+                    
+                    setTimeout(function ()
+                    {
+                        isJumping = false;
+                    }, 500);
                 }
       
             }
