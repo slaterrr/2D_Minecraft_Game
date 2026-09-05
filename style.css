@@ -12,6 +12,16 @@
 
 }
 
+.inventory
+{
+    display:grid;
+    justify-content: center;
+    width: 50vw;
+    height: 8vh;
+    align-items: center;
+    background-color: white;
+}
+
 .block
 {
     display: flex;

@@ -19,12 +19,23 @@ gameScreen.addEventListener('contextmenu',function(event)
     event.preventDefault();
 });
 
+//Inventory
+const inventoryElem = document.createElement('div');
+inventoryElem.className = 'inventory';
+
+const outerScreen = document.getElementById('screen');
+outerScreen.appendChild(inventoryElem);
+
+const inventory = ['empty','empty','empty','empty','empty','empty','empty','empty','empty','empty'];
+
 
 // Player state
 let playerRow = 1;
 let playerColumn = 5;
 let airMovesRemaining = 1;
 let isJumping = false;
+
+
 
 function renderWorld()
 {
