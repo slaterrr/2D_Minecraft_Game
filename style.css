@@ -1,0 +1,36 @@
+
+#game
+{
+    display: grid;
+    grid-template-columns: repeat(10,max-content);
+
+}
+
+.block
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: last baseline;
+    width: 150px;
+    height: 150px;
+}
+
+.grass
+{
+    background-color: rgb(20, 154, 20);
+}
+
+.air
+{
+    background-color: rgb(63, 141, 251);
+}
+
+.player
+{
+    height: 50px;
+    width: 45px;
+    background-color: rgb(240, 180, 249);
+    border-radius: 15px;
+    
+}
