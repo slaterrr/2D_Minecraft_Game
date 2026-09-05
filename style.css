@@ -1,6 +1,12 @@
+#screen
+{
+    background-color: black;
+}
 
 #game
 {
+    justify-content: center;
+    align-items: center;
     display: grid;
     grid-template-columns: repeat(10,max-content);
 

@@ -18,6 +18,8 @@ const world = [row0,row1,row2,row3,row4,row5];
 let playerRow = 1;
 let playerColumn = 5;
 
+
+
 function renderWorld()
 {
     gameScreen.replaceChildren();
@@ -55,18 +57,20 @@ renderWorld();
 
 function gravity()
 {
-    if(playerRow < rowCount - 1)
+    if(playerRow < rowCount - 1) // if player is above the last block in the world
         {
             if(world[playerRow+1][playerColumn] == 'air')
             {
                 playerRow++;
                 renderWorld();
-                setTimeout(gravity,500);
+                //setTimeout(gravity,500);
             }
 
     }
     
 }
+
+setInterval(gravity, 100);
 
 
 
@@ -80,16 +84,19 @@ document.addEventListener('keydown',function(event)
                 {
                     playerColumn++;                    
                     renderWorld();
-                    setTimeout(gravity,800); 
+                    //setTimeout(gravity,800); 
                 }   
+                //Auto-move up mechanic
+                /*
                 else if(world[playerRow][playerColumn+1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn+1] == 'air') 
                 {
                     playerRow--;
                     setTimeout(renderWorld,3000);
                     playerColumn++;
                     renderWorld();
-                    setTimeout(gravity,500);                       
+                    //setTimeout(gravity,500);                       
                 }
+                    */
             }
             
         }
@@ -103,16 +110,17 @@ document.addEventListener('keydown',function(event)
                         
                         playerColumn--;
                         renderWorld();
-                        setTimeout(gravity,500);     
+                        //setTimeout(gravity,500);     
             
                 }
+                //Auto-move up mechanic
                 else if(world[playerRow][playerColumn-1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn-1] == 'air') 
                 {
                     playerRow--;
                     setTimeout(renderWorld,3000);
                     playerColumn--;
                     renderWorld();
-                    setTimeout(gravity,500);                       
+                    //setTimeout(gravity,500);                       
                 }
 
             }
@@ -128,7 +136,7 @@ document.addEventListener('keydown',function(event)
                 {
                     playerRow--;
                     renderWorld();
-                    setTimeout(gravity,1500);                          
+                    //setTimeout(gravity,1500);                          
                 }
       
             }
@@ -142,7 +150,7 @@ document.addEventListener('keydown',function(event)
                 {
                     playerRow++;
                     renderWorld();
-                    setTimeout(gravity,500);     
+                    //setTimeout(gravity,500);     
                     
                     
                 } 
