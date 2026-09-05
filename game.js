@@ -18,7 +18,7 @@ const world = [row0,row1,row2,row3,row4,row5];
 let playerRow = 1;
 let playerColumn = 5;
 let airMovesRemaining = 1;
-
+let isJumping = false;
 
 function renderWorld()
 {
@@ -30,6 +30,13 @@ function renderWorld()
             const cell = document.createElement('div');
             cell.className = 'block';
             gameScreen.appendChild(cell);
+
+            cell.addEventListener('click',function()
+            {
+                console.log('Clicked: ' + 'Row Index: ' + rowIndex + 'Column Index: ' + columnIndex);
+                mineBlock(rowIndex, columnIndex);
+            });
+
             if(row[columnIndex] == 'air')
             {
             cell.classList.add('air');  
@@ -67,7 +74,6 @@ function gravity()
         {
             playerRow++;
             renderWorld();
-            //setTimeout(gravity,500);
         }
 
     }
@@ -76,7 +82,6 @@ function gravity()
 
 setInterval(gravity, 100);
 
-let isJumping = false;
 
 document.addEventListener('keydown',function(event)
     {
@@ -98,33 +103,15 @@ document.addEventListener('keydown',function(event)
                         {
                         return;
                         }
-                        
                     } 
                     else
                     {
                         playerColumn++;                    
                         renderWorld();    
                     } 
-                    
-                    
-                    
-                    
-                    
-                    //setTimeout(gravity,800); 
+
                 }
-                
-                
-                //Auto-move up mechanic
-                /*
-                else if(world[playerRow][playerColumn+1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn+1] == 'air') 
-                {
-                    playerRow--;
-                    setTimeout(renderWorld,3000);
-                    playerColumn++;
-                    renderWorld();
-                    //setTimeout(gravity,500);                       
-                }
-                    */
+
             }
             
         }
@@ -155,19 +142,6 @@ document.addEventListener('keydown',function(event)
                         renderWorld();    
                     }     
                 }
-
-                
-                //Auto-move up mechanic
-                /*
-                else if(world[playerRow][playerColumn-1] == 'grass' && world[playerRow-1][playerColumn] =='air' && world[playerRow-1][playerColumn-1] == 'air') 
-                {
-                    playerRow--;
-                    setTimeout(renderWorld,3000);
-                    playerColumn--;
-                    renderWorld();
-                    //setTimeout(gravity,500);                       
-                }
-                */
             }
             
         }
@@ -177,13 +151,13 @@ document.addEventListener('keydown',function(event)
 
             if(playerRow > 0)
             {
+                // if the block above them
                 if(world[playerRow-1][playerColumn] != 'grass' && world[playerRow+1][playerColumn] == 'grass')
                 {
                     playerRow--;
                     renderWorld();
                     isJumping = true;
-                    airMovesRemaining = 1;
-                    //setTimeout(gravity,1500);  
+                    airMovesRemaining = 1;  
                     
                     setTimeout(function ()
                     {
@@ -202,17 +176,66 @@ document.addEventListener('keydown',function(event)
                 {
                     playerRow++;
                     renderWorld();
-                    //setTimeout(gravity,500);     
-                    
-                    
                 } 
-            }
-                
+            }       
         }
-
-
-
-
         console.log(event.key);
     }
 );
+
+document.addEventListener('mousedown',function(event)
+{
+    //left = 0
+    //middle = 0
+    //right = 0
+    console.log(event.button);
+
+    if(event.button == 0)
+    {
+
+    }
+});
+
+function mineBlock(row,col)
+{
+    if(row == playerRow+1 && playerColumn == col) //bottom
+    {
+        world[row][col] = 'air';   
+        renderWorld();    
+    }
+    else if(row == playerRow-1 && playerColumn == col) //top
+    {
+        world[row][col] = 'air';   
+        renderWorld();        
+    }
+    else if(row == playerRow && playerColumn+1 == col) //right
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+    else if(row == playerRow && playerColumn-1 == col) //left
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+    else if(row == playerRow-1 && playerColumn-1 == col)//top left
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+    else if(row == playerRow-1 && playerColumn+1 == col) //top right
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+    else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+    else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
+    {
+        world[row][col] = 'air';   
+        renderWorld(); 
+    }
+}
