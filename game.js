@@ -151,8 +151,8 @@ document.addEventListener('keydown',function(event)
 
             if(playerRow > 0)
             {
-                // if the block above them
-                if(world[playerRow-1][playerColumn] != 'grass' && world[playerRow+1][playerColumn] == 'grass')
+                // if the block above them is not grass, and the block below them is grass or the playerRow
+                if(world[playerRow-1][playerColumn] != 'grass' && ((playerRow == 5) || (world[playerRow+1][playerColumn] == 'grass') ) )
                 {
                     playerRow--;
                     renderWorld();
