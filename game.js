@@ -14,6 +14,12 @@ const row5 = ['grass','grass','grass','grass','grass','grass','grass','grass','g
 
 const world = [row0,row1,row2,row3,row4,row5];
 
+gameScreen.addEventListener('contextmenu',function(event)
+{
+    event.preventDefault();
+});
+
+
 // Player state
 let playerRow = 1;
 let playerColumn = 5;
@@ -31,10 +37,19 @@ function renderWorld()
             cell.className = 'block';
             gameScreen.appendChild(cell);
 
-            cell.addEventListener('click',function()
+            cell.addEventListener('mousedown',function(event)
             {
-                console.log('Clicked: ' + 'Row Index: ' + rowIndex + 'Column Index: ' + columnIndex);
-                mineBlock(rowIndex, columnIndex);
+                if(event.button == 0)
+                {
+                    console.log('Left Click: ' + 'Row Index: ' + rowIndex + 'Column Index: ' + columnIndex);
+                    mineBlock(rowIndex, columnIndex);    
+                }
+                else if(event.button == 2)
+                {
+                    console.log('Right Click: ' + 'Row Index: ' + rowIndex + 'Column Index: ' + columnIndex);
+                    placeBlock(rowIndex,columnIndex);
+                }
+                
             });
 
             if(row[columnIndex] == 'air')
@@ -189,53 +204,100 @@ document.addEventListener('mousedown',function(event)
     //middle = 0
     //right = 0
     console.log(event.button);
-
-    if(event.button == 0)
-    {
-
-    }
 });
 
 function mineBlock(row,col)
 {
-    if(row == playerRow+1 && playerColumn == col) //bottom
+    if(world[row][col] != 'air')
     {
-        world[row][col] = 'air';   
-        renderWorld();    
+       if(row == playerRow+1 && playerColumn == col) //bottom
+        {
+            world[row][col] = 'air';   
+            renderWorld();    
+        }
+        else if(row == playerRow-1 && playerColumn == col) //top
+        {
+            world[row][col] = 'air';   
+            renderWorld();        
+        }
+        else if(row == playerRow && playerColumn+1 == col) //right
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }
+        else if(row == playerRow && playerColumn-1 == col) //left
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }
+        else if(row == playerRow-1 && playerColumn-1 == col)//top left
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }
+        else if(row == playerRow-1 && playerColumn+1 == col) //top right
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }
+        else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }
+        else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
+        {
+            world[row][col] = 'air';   
+            renderWorld(); 
+        }     
     }
-    else if(row == playerRow-1 && playerColumn == col) //top
+        
+}
+
+function placeBlock(row,col)
+{
+    if(world[row][col] == 'air')
     {
-        world[row][col] = 'air';   
-        renderWorld();        
+      if(row == playerRow+1 && playerColumn == col) //bottom
+        {
+            world[row][col] = 'grass';   
+            renderWorld();    
+        }
+        else if(row == playerRow-1 && playerColumn == col) //top
+        {
+            world[row][col] = 'grass';   
+            renderWorld();        
+        }
+        else if(row == playerRow && playerColumn+1 == col) //right
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }
+        else if(row == playerRow && playerColumn-1 == col) //left
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }
+        else if(row == playerRow-1 && playerColumn-1 == col)//top left
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }
+        else if(row == playerRow-1 && playerColumn+1 == col) //top right
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }
+        else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }
+        else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
+        {
+            world[row][col] = 'grass';   
+            renderWorld(); 
+        }       
     }
-    else if(row == playerRow && playerColumn+1 == col) //right
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
-    else if(row == playerRow && playerColumn-1 == col) //left
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
-    else if(row == playerRow-1 && playerColumn-1 == col)//top left
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
-    else if(row == playerRow-1 && playerColumn+1 == col) //top right
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
-    else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
-    else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
-    {
-        world[row][col] = 'air';   
-        renderWorld(); 
-    }
+           
 }
