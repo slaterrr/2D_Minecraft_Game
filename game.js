@@ -22,12 +22,12 @@ gameScreen.addEventListener('contextmenu',function(event)
 //Inventory
 const inventoryElem = document.createElement('div');
 inventoryElem.className = 'inventory';
+let selectedBlock;
 
 const outerScreen = document.getElementById('screen');
 outerScreen.appendChild(inventoryElem);
 
-const inventory = ['empty','empty','empty','empty','empty','empty','empty','empty','empty','empty'];
-
+const inventory = [];
 
 // Player state
 let playerRow = 1;
@@ -86,7 +86,13 @@ function renderWorld()
 
 renderWorld();
 
-
+function renderInventory()
+{
+    for(let i = 0; i < inventory; i++)
+    {
+        
+    }
+}
 
 function gravity()
 {
@@ -223,92 +229,126 @@ function mineBlock(row,col)
     {
        if(row == playerRow+1 && playerColumn == col) //bottom
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld();    
+            renderWorld();
+              
         }
         else if(row == playerRow-1 && playerColumn == col) //top
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld();        
+            renderWorld();   
+                  
         }
         else if(row == playerRow && playerColumn+1 == col) //right
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();  
         }
         else if(row == playerRow && playerColumn-1 == col) //left
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();   
         }
         else if(row == playerRow-1 && playerColumn-1 == col)//top left
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();  
         }
         else if(row == playerRow-1 && playerColumn+1 == col) //top right
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();  
         }
         else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();  
         }
         else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
         {
+            pickUpItem(row,col);
             world[row][col] = 'air';   
-            renderWorld(); 
+            renderWorld();  
         }     
     }
         
 }
 
+
+function pickUpItem(row,col)
+{
+    selectedBlock = world[row][col];
+
+    switch(selectedBlock)
+    {
+        case 'grass':
+            inventory.push('grass');
+    }
+}
+
 function placeBlock(row,col)
 {
-    if(world[row][col] == 'air')
+    if(inventory.includes('grass'))
     {
-      if(row == playerRow+1 && playerColumn == col) //bottom
+        if(world[row][col] == 'air')
         {
-            world[row][col] = 'grass';   
-            renderWorld();    
-        }
-        else if(row == playerRow-1 && playerColumn == col) //top
-        {
-            world[row][col] = 'grass';   
-            renderWorld();        
-        }
-        else if(row == playerRow && playerColumn+1 == col) //right
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }
-        else if(row == playerRow && playerColumn-1 == col) //left
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }
-        else if(row == playerRow-1 && playerColumn-1 == col)//top left
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }
-        else if(row == playerRow-1 && playerColumn+1 == col) //top right
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }
-        else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }
-        else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
-        {
-            world[row][col] = 'grass';   
-            renderWorld(); 
-        }       
+        if(row == playerRow+1 && playerColumn == col) //bottom
+            {
+                world[row][col] = 'grass'; 
+                inventory.pop();  
+                renderWorld();    
+            }
+            else if(row == playerRow-1 && playerColumn == col) //top
+            {
+                world[row][col] = 'grass';   
+                inventory.pop(); 
+                renderWorld();        
+            }
+            else if(row == playerRow && playerColumn+1 == col) //right
+            {
+                world[row][col] = 'grass';
+                inventory.pop();    
+                renderWorld(); 
+            }
+            else if(row == playerRow && playerColumn-1 == col) //left
+            {
+                world[row][col] = 'grass';  
+                inventory.pop();  
+                renderWorld(); 
+            }
+            else if(row == playerRow-1 && playerColumn-1 == col)//top left
+            {
+                world[row][col] = 'grass'; 
+                inventory.pop();   
+                renderWorld(); 
+            }
+            else if(row == playerRow-1 && playerColumn+1 == col) //top right
+            {
+                world[row][col] = 'grass'; 
+                inventory.pop();   
+                renderWorld(); 
+            }
+            else if(row == playerRow+1 && playerColumn-1 == col) // bottom left
+            {
+                world[row][col] = 'grass'; 
+                inventory.pop();   
+                renderWorld(); 
+            }
+            else if(row == playerRow+1 && playerColumn+1 == col) //bottom right
+            {
+                world[row][col] = 'grass';
+                inventory.pop();    
+                renderWorld(); 
+            }       
+        }    
     }
+    
            
 }

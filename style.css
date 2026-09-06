@@ -14,8 +14,8 @@
 
 .inventory
 {
-    display:grid;
     justify-content: center;
+    display:grid;
     width: 50vw;
     height: 8vh;
     align-items: center;
