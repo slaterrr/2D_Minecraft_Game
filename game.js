@@ -27,8 +27,6 @@ let selectedBlock;
 const outerScreen = document.getElementById('screen');
 outerScreen.appendChild(inventoryElem);
 
-const inventory = [];
-
 // Player state
 let playerRow = 1;
 let playerColumn = 5;
@@ -86,13 +84,23 @@ function renderWorld()
 
 renderWorld();
 
+const inventory = [];
+
+
+//TODO: Fix excessive divs when user picks up block. Check value of empty inventory.
+//! I see that it's duplicating, so will check tomorrow
+
 function renderInventory()
 {
-    for(let i = 0; i < inventory; i++)
+    for(let i = 0; i < inventory.length; i++)
     {
-        
+        const cell_item = document.createElement('div');
+        cell_item.className = 'item';
+        inventoryElem.appendChild(cell_item);
     }
 }
+
+renderInventory();
 
 function gravity()
 {
@@ -290,6 +298,8 @@ function pickUpItem(row,col)
     {
         case 'grass':
             inventory.push('grass');
+            renderInventory();
+            console.log('Picked up ' + selectedBlock);
     }
 }
 

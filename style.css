@@ -15,10 +15,9 @@
 .inventory
 {
     justify-content: center;
-    display:grid;
-    width: 50vw;
-    height: 8vh;
-    align-items: center;
+     align-items: center;
+     display:grid;
+    grid-template-columns: repeat(10,max-content);
     background-color: white;
 }
 
