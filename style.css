@@ -15,10 +15,23 @@
 .inventory
 {
     justify-content: center;
-     align-items: center;
-     display:grid;
+    align-items: center;
+    display:grid;
     grid-template-columns: repeat(10,max-content);
-    background-color: white;
+    background-color: rgb(64, 64, 64);
+    padding-top: 4px;
+    padding-inline: 4px;
+}
+
+.item
+{
+    padding: 4px;
+    background-color: gray;
+    height: 40px;
+    width: 100px;
+    border-radius: 8px;
+    border-width: 4px;
+    border-color: black;
 }
 
 .block
